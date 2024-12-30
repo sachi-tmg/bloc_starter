@@ -5,10 +5,13 @@ import 'package:bloc_test/cubit/counter_cubit.dart';
 import 'package:bloc_test/cubit/simple_interest_cubit.dart';
 import 'package:bloc_test/cubit/student_cubit.dart';
 import 'package:bloc_test/view/area_of_circle_cubit_view.dart';
+import 'package:bloc_test/view/arithmetic_bloc_view.dart';
 import 'package:bloc_test/view/arithmetic_cubit_view.dart';
 import 'package:bloc_test/view/converter_cubit_view.dart';
+import 'package:bloc_test/view/counter_bloc_view.dart';
 import 'package:bloc_test/view/counter_cubit_view.dart';
 import 'package:bloc_test/view/simple_interest_cubit_view.dart';
+import 'package:bloc_test/view/student_bloc_view.dart';
 import 'package:bloc_test/view/student_cubit_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -99,6 +102,27 @@ class DashboardCubit extends Cubit<void> {
           child: ConverterCubitView(),
         ),
       ),
+    );
+  }
+
+  void openCounterBLocView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => CounterBlocView()),
+    );
+  }
+
+  void openArithmeticBlocView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => ArithmeticBlocView()),
+    );
+  }
+
+  void openStudentBlocView(BuildContext context) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (_) => StudentBlocView()),
     );
   }
 }
