@@ -1,3 +1,4 @@
+import 'package:bloc_test/bloc/arithmetic_bloc.dart';
 import 'package:bloc_test/cubit/area_of_circle_cubit.dart';
 import 'package:bloc_test/cubit/arithmetic_cubit.dart';
 import 'package:bloc_test/cubit/converter_cubit.dart';
@@ -24,6 +25,7 @@ class DashboardCubit extends Cubit<void> {
     this._simpleInterestCubit,
     this._areaOfCircleCubit,
     this._converterCubit,
+    this._arithmeticBloc,
   ) : super(null);
 
   final CounterCubit _counterCubit;
@@ -32,6 +34,7 @@ class DashboardCubit extends Cubit<void> {
   final SimpleInterestCubit _simpleInterestCubit;
   final AreaOfCircleCubit _areaOfCircleCubit;
   final ConverterCubit _converterCubit;
+  final ArithmeticBloc _arithmeticBloc;
 
   void openCounterView(BuildContext context) {
     Navigator.push(
@@ -115,7 +118,12 @@ class DashboardCubit extends Cubit<void> {
   void openArithmeticBlocView(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (_) => ArithmeticBlocView()),
+      MaterialPageRoute(
+        builder: (_) => BlocProvider.value(
+          value: _arithmeticBloc,
+          child: ArithmeticBlocView(),
+        ),
+      ),
     );
   }
 
