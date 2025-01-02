@@ -1,4 +1,7 @@
+import 'package:bloc_test/bloc/student_bloc.dart';
+import 'package:bloc_test/model/student_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class StudentBlocView extends StatelessWidget {
   final _nameController = TextEditingController();
@@ -67,11 +70,47 @@ class StudentBlocView extends StatelessWidget {
               ),
               const SizedBox(height: 8),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  if (_formKey2.currentState!.validate()) {
+                    StudentModel student = StudentModel(
+                      name: _nameController.text,
+                      age: int.parse(_ageController.text),
+                      address: _addressController.text,
+                    );
+                    context.read<StudentBloc>().add(AddStudentEvent(student));
+                  }
+                },
                 child: const Text('Submit'),
               ),
               SizedBox(height: 8),
-              Text('Output'),
+              BlocBuilder<StudentBloc, StudentState>(
+                builder: (context, state) {
+                  if (state.isLoading) {
+                    return const CircularProgressIndicator();
+                  } else if (state.students.isEmpty) {
+                    return const Text('No students added yet');
+                  } else {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: state.students.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(state.students[index].name),
+                          subtitle: Text(state.students[index].age.toString()),
+                          trailing: IconButton(
+                            icon: const Icon(Icons.delete),
+                            onPressed: () {
+                              context
+                                  .read<StudentBloc>()
+                                  .add(DeleteStudentEvent(index));
+                            },
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),
